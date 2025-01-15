@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPA Calculator</title>
+    <link rel="stylesheet" href="{% static 'css/app.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h2>GPA Calculator</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Subject Name</th>
+                        <th>Credit Hours</th>
+                        <th>Grade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in rows %}
+                    <tr>
+                        <td>
+                            <input 
+                                type="text" 
+                                name="subject_name_{{ i }}" 
+                                placeholder="Optional" 
+                                class="subject-name-input"
+                            >
+                        </td>
+                        <td>
+                            <select name="credit_hours_{{ i }}">
+                                <option value="0" selected>0</option>
+                                <option value="3">3</option>
+                                <option value="2">2</option>
+                                <option value="1">1</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select name="grade_{{ i }}">
+                                <option value="0" selected>0</option>
+                                <option value="A">A</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B">B</option>
+                                <option value="B-">B-</option>
+                                <option value="C+">C+</option>
+                                <option value="C">C</option>
+                                <option value="C-">C-</option>
+                                <option value="D">D</option>
+                                <option value="F">F</option>
+                            </select>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <button type="submit">Calculate GPA</button>
+        </form>
+        {% if gpa is not None %}
+        <div class="result">
+            <strong>Your GPA:</strong> {{ gpa }}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
